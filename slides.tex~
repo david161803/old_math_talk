@@ -1,0 +1,182 @@
+\documentclass{beamer}
+\usepackage{ragged2e}
+\usepackage{graphics}
+\usepackage{graphicx}
+\usepackage{subfigure}
+\usepackage{multicol}
+\usepackage{color}
+   \justifying
+
+\mode<presentation>
+{
+       \definecolor{darkred}{rgb}{0.607,0.145,0.145}
+       \definecolor{gold}{rgb}{1,0.73,0.24}
+       \setbeamertemplate{background canvas}[vertical shading][bottom=darkred!10,top=gold!10]
+       \usetheme{Warsaw}
+       \usefonttheme[onlysmall]{structurebold}
+}
+% \usepackage{beamerthemesplit} // Activate for custom appearance
+ \title[Variational Patterns]{Wavenumber Selection of Turing Patterns through Boundary Conditions}
+\author[DPM]{David P. Morrissey}
+% \institute[]{
+% School of Mathematics\\
+% University of Minnesota}
+\date[17-May-12]{University of Minnesota, \\$3^{rd}$ of April 2014}
+\subject{Wavenumber Selection}
+
+\begin{document}
+\frame{\titlepage}
+
+\section{Cahn-Hilliard}
+
+\begin{frame}
+\frametitle{Heuristic Derivation}
+Let $F[u]$ be the free energy of a volume $\Omega$ defined on a non-uniform property, $\phi$, of the medium.
+\[
+ F[\phi] = \int_\Omega f(\phi, \nabla\phi, \nabla^2\phi, \ldots) dx
+\]
+\pause
+For an isotropic medium the free energy is invariant under the reflections $x_i \rightarrow -x_i$ and $x_i \rightarrow x_j$ so that f expands as
+\[
+ F[\phi] = \int_\Omega \left ( f_0(\phi) + \kappa_1 \nabla^2\phi + \kappa_2 |\nabla\phi|^2 \right) dx
+\]
+where $\kappa_1 = \frac{\partial f}{\partial\nabla^2\phi}$ and $\kappa_2 = \frac{\partial f}{\partial  |\nabla \phi|^2}$ are tensors given by the crystal structure of the medium.
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Heuristic Derivation}
+Integrating by parts and dropping higher order terms we are left with an energy functional of the forming
+\[
+ F[\phi] = \int_\Omega \left ( f_0(\phi) + \frac{c}{2}|\nabla\phi|^2 \right) dx + \int_{\partial \Omega} \kappa_1 \nabla\phi\cdot n dS
+\]
+where $c = 2(\kappa_2 - \frac{d\kappa_1}{d\phi})$
+\end{frame}
+
+\begin{frame}
+ \frametitle{Potentials}
+Assume a parameter dependent phase transition past a bifurcating value from a ``random`` phase (homogeneuos $\phi$) to an ''ordered`` stable phase $\phi^*$.  
+This can be modeled by a ''homogeneuos potential`` of the form
+\[
+ f_0(\phi ; \lambda) = \left ( (a(\lambda) - (b(\lambda) \phi)^2 )\right )^2
+\]
+for stable phases given as $\phi^*(\lambda) = \frac{\sqrt{a}}{b}$.
+
+
+\pause
+The variation of the energy with respect to the order parameter $\phi$ gives the total potential $\mu$
+\[
+\frac{\delta F}{\delta \phi} = \mu = \frac{\partial f_0}{\partial \phi} - c|\nabla\phi|^2
+\]
+\pause
+so that the flux of the total potential is 
+\[
+ J = -D\nabla \mu
+\]
+for a diffusion constant D.
+\end{frame}
+
+\begin{frame}
+\frametitle{Cahn Hilliard equation}
+Applying a continuity equation we have Cahn-Hilliard as a coupled second order system:
+\begin{eqnarray*}
+ \phi_t &=& \nabla \cdot D\nabla\mu \\
+ \mu &=& \frac{\partial f_0}{\partial \phi} - c|\nabla\phi|^2
+\end{eqnarray*}
+\pause
+A general, phenomenalogical, 4th order, conservation law of a quantity which has a ''homogeneoues`` free energy and a ''gradient`` free energy
+\[
+ \phi_t = D\nabla^2[(1-\phi^2)^2 - \gamma \nabla^2 \phi ]
+\]
+\end{frame}
+
+\begin{frame}
+ \frametitle{Gradient Dynamics}
+ Under the right boundary conditions the free energy functional serves as a Lyapunov functional.
+ \[
+  \frac{dF}{dt} = \int \frac{\delta F}{\delta \phi}\frac{d\phi}{dt} = \int \mu \phi_t
+ \]
+ \[
+  \frac{dF}{dt} = D \int_\Omega \mu \nabla^2\mu = -D\int_\Omega |\nabla\mu|^2 + D\int_{\partial\Omega} \mu \frac{\partial \mu}{\partial n}
+ \]
+ \pause
+ For homogeneoues Neumann or homogeneoues Dirichlet boundary conditions on the potential $\mu$, $F$ serves as a Lyapuov functional given that the original boundary term also vanishes
+ \[
+   \int_{\partial \Omega} \kappa_1 \nabla\phi\cdot n dS
+ \]
+
+
+\end{frame}
+
+
+
+\section{Better model equation?}
+
+\begin{frame}
+ \frametitle{Swift-Hohenberg}
+Originally developed as a model for convective instabilities in hydrodynamics, the Swift-Hohenberg equation
+\[
+u_t=-(\nabla^2-1)^2u + \mu u -u^3
+\]
+is a well known model for pattern forming systems.  The equation has equilibrium $u=0$ which for $\mu>0$ is linearly unstable.  
+For particular boundary conditions, perturbations from the zero solution saturate to leading order as $u(x)=\sqrt{\frac{4\mu}{3}}\cos(kx + \varphi) + \mathcal{O}(\mu^{\frac{3}{2}})$
+\end{frame}
+
+\begin{frame}
+ \frametitle{SH Gradient Dynamics}
+Similar to Cahn Hilliard the Swift Hohenberg equation has a Lyapunov functional arising from the energy fuctional
+\[
+ F[u] = \frac{1}{2} \int_\Omega {[(\partial_x^2 + 1)u]^2 - \mu u^2 + \frac{1}{2}u^4 }dx.
+\]
+\pause
+Taking a variation we find
+\begin{eqnarray*}
+ \frac{\delta F}{\delta u}v &=& \int_\Omega (u_{xx}v_{xx} + u_{xx}v + uv_{xx} + uv)dx + \int_\Omega (-\mu u + u^3)vdx \\
+ &=& \int_\Omega (u_{xxxx} + 2u_{xx} + u -\mu u + u^3)vdx + BC \\
+ &=& \int_\Omega -u_t vdx + [(u_{xx} + u)\phi_x - (u_{xxx} + u_x)\phi]_{\partial\Omega}
+\end{eqnarray*}
+\end{frame}
+
+%[(u_{xx} + u)\phi_x - (u_{xxx} + u_x)\phi]_\Omega
+\begin{frame}
+\frametitle{Asymptotic solutions}
+ Perturbation Theory gives us a family of stationary solutions parameterized by wavenumber
+ \[
+  u(x;k)=\sqrt{\frac{4\mu}{3}}\cos(kx ) + \mathcal{O}(\mu^{\frac{3}{2}}).
+ \]
+\pause
+The only symmetry of Swift Hohenberg is translation invariance so that solutions can be paramterized by the wavenumber $k$ and phase $\varphi$.
+\[
+  u(x;k)=\sqrt{\frac{4\mu}{3}}\cos(kx + \varphi) + \mathcal{O}(\mu^{\frac{3}{2}}).
+ \]
+But, again the boundary conditions break this symmetry (Consider Neumann.)
+\end{frame}
+
+\section{Simplest boundary imposed pattern}
+\begin{frame}
+\frametitle{}
+ We would like to understand the wavenumber and phase reationship of stationary solutions for diferent boundary conditions on the half line.  
+ And identify cases of wavenumber selection and phase selection.
+ \[
+ -(\partial_x^2 + 1)^2u + \mu u - u^3 = 0  \;\text{  for  }\; x\in (0,\infty)
+ \]
+ With the boundary conditions
+ \begin{eqnarray*}
+  \gamma u''(0) + (1-\gamma)u'(0) + \gamma u(0) &=& 0 \\
+  u'''(0) + \gamma u'(0) &=& 0
+ \end{eqnarray*}
+ SO that $\gamma = 0$ corresponds to Neumann boundary conditions and $\gamma = 1$ corresponds to ``transparent'' boundary conditions.
+
+ 
+
+
+ 
+% Neumann boundary conditions $u'(0)=u'''(0)=0$ are a simple case of phase selection since the translation is fixed.
+\end{frame}
+
+
+
+
+\end{document}
+
+

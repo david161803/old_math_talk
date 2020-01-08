@@ -1,0 +1,4 @@
+\beamer@endinputifotherversion {3.10pt}
+\beamer@sectionintoc {1}{Cahn-Hilliard}{2}{0}{1}
+\beamer@sectionintoc {2}{Better model equation?}{12}{0}{2}
+\beamer@sectionintoc {3}{Simplest boundary imposed pattern}{17}{0}{3}
